@@ -1,0 +1,102 @@
+DATABASE_URL present: true
+GEMINI_API_KEY present: true
+node.exe : C:\Users\use
+r\Downloads\uol 
+project (2)\uol project
+\uol-portal\node_module
+s\@prisma\client\src\ru
+ntime\utils\validatePri
+smaClientOptions.ts:229
+At line:1 char:1
++ & "C:\Program 
+Files\nodejs/node.exe" 
+"C:\Program 
+Files\nodejs/node_mo 
+...
++ ~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~
+~~
+    + CategoryInfo     
+         : NotSpecifi  
+  ed: (C:\Users\user   
+ \D...tOptions.ts:2    
+29:String) [], Rem    
+oteException
+    + FullyQualifiedEr 
+   rorId : NativeComm  
+  andError
+ 
+    throw new PrismaCli
+entConstructorValidatio
+nError(
+          ^
+
+PrismaClientConstructor
+ValidationError: Using 
+engine type "client" 
+requires either 
+"adapter" or 
+"accelerateUrl" to be 
+provided to 
+PrismaClient 
+constructor.
+Read more at https://pr
+is.ly/d/client-construc
+tor
+    at validateDependen
+tOptions (C:\Users\user
+\Downloads\uol project 
+(2)\uol project\uol-por
+tal\node_modules\@prism
+a\client\src\runtime\ut
+ils\validatePrismaClien
+tOptions.ts:229:11)
+    at validatePrismaCl
+ientOptions (C:\Users\u
+ser\Downloads\uol 
+project (2)\uol project
+\uol-portal\node_module
+s\@prisma\client\src\ru
+ntime\utils\validatePri
+smaClientOptions.ts:246
+:3)
+    at new t (C:\Users\
+user\Downloads\uol 
+project (2)\uol project
+\uol-portal\node_module
+s\@prisma\client\src\ru
+ntime\getPrismaClient.t
+s:281:7)
+    at <anonymous> (C:\
+Users\user\Downloads\uo
+l project (2)\uol proje
+ct\uol-portal\test_db_a
+nd_ai.ts:11:16)
+    at 
+Object.<anonymous> (C:\
+Users\user\Downloads\uo
+l project (2)\uol proje
+ct\uol-portal\test_db_a
+nd_ai.ts:41:6)
+    at Module._compile 
+(node:internal/modules/
+cjs/loader:1760:14)
+    at 
+Object.transformer (C:\
+Users\user\AppData\Loca
+l\npm-cache\_npx\fd45a7
+2a545557e9\node_modules
+\tsx\dist\register-D46f
+vsV_.cjs:3:1104)
+    at Module.load (nod
+e:internal/modules/cjs/
+loader:1480:32)
+    at Module._load (no
+de:internal/modules/cjs
+/loader:1299:12)
+    at TracingChannel.t
+raceSync (node:diagnost
+ics_channel:328:14)
+
+Node.js v24.11.0

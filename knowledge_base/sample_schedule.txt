@@ -1,0 +1,26 @@
+
+THE UNIVERSITY OF LAHORE
+Department of Computer Science
+Spring 2026 Class Schedule
+
+Course: Artificial Intelligence
+Instructor: Dr. Ayesha Khan
+Days: Monday, Wednesday
+Time: 10:00 AM - 11:30 AM
+Room: C-201
+
+Course: Web Engineering
+Instructor: Sir Bilal Ahmed
+Days: Tuesday, Thursday
+Time: 01:00 PM - 02:30 PM
+Room: A-101
+
+Course: Database Systems
+Instructor: Ma'am Fatima
+Days: Friday
+Time: 09:00 AM - 12:00 PM (Lab)
+Room: Lab-3
+
+Exam Dates:
+Mid Term: April 15, 2026
+Final Exam: June 20, 2026

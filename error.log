@@ -1,0 +1,98 @@
+﻿node.exe : node:interna
+l/modules/cjs/loader:14
+20
+At line:1 char:1
++ & "C:\Program 
+Files\nodejs/node.exe" 
+"C:\Program 
+Files\nodejs/node_mo 
+...
++ ~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~
+~~
+    + CategoryInfo     
+         : NotSpecifi  
+  ed: (node:internal   
+ /modules/cjs/loade    
+r:1420:String) [],     
+RemoteException
+    + FullyQualifiedEr 
+   rorId : NativeComm  
+  andError
+ 
+  const err = new 
+Error(message);
+              ^
+
+Error: Cannot find 
+module 
+'@google/generative-ai'
+Require stack:
+- C:\Users\user\Downloa
+ds\uol project (2)\uol 
+project\uol-portal\test
+_ai_v2.ts
+    at node:internal/mo
+dules/cjs/loader:1420:1
+5
+    at 
+nextResolveSimple (C:\U
+sers\user\AppData\Local
+\npm-cache\_npx\fd45a72
+a545557e9\node_modules\
+tsx\dist\register-D46fv
+sV_.cjs:4:1004)
+    at C:\Users\user\Ap
+pData\Local\npm-cache\_
+npx\fd45a72a545557e9\no
+de_modules\tsx\dist\reg
+ister-D46fvsV_.cjs:3:26
+30
+    at C:\Users\user\Ap
+pData\Local\npm-cache\_
+npx\fd45a72a545557e9\no
+de_modules\tsx\dist\reg
+ister-D46fvsV_.cjs:3:15
+42
+    at resolveTsPaths (
+C:\Users\user\AppData\L
+ocal\npm-cache\_npx\fd4
+5a72a545557e9\node_modu
+les\tsx\dist\register-D
+46fvsV_.cjs:4:760)
+    at C:\Users\user\Ap
+pData\Local\npm-cache\_
+npx\fd45a72a545557e9\no
+de_modules\tsx\dist\reg
+ister-D46fvsV_.cjs:4:11
+02
+    at 
+m._resolveFilename (fil
+e:///C:/Users/user/AppD
+ata/Local/npm-cache/_np
+x/fd45a72a545557e9/node
+_modules/tsx/dist/regis
+ter-B7jrtLTO.mjs:1:789)
+    at 
+defaultResolveImpl (nod
+e:internal/modules/cjs/
+loader:1058:19)
+    at 
+resolveForCJSWithHooks 
+(node:internal/modules/
+cjs/loader:1063:22)
+    at Module._load (no
+de:internal/modules/cjs
+/loader:1226:37) {
+  code: 
+'MODULE_NOT_FOUND',
+  requireStack: [
+    'C:\\Users\\user\\D
+ownloads\\uol project 
+(2)\\uol project\\uol-p
+ortal\\test_ai_v2.ts'
+  ]
+}
+
+Node.js v24.11.0

@@ -1,0 +1,80 @@
+node.exe : C:\Users\use
+r\Downloads\uol 
+project (2)\uol project
+\uol-portal\node_module
+s\server-only\index.js:
+1
+At line:1 char:1
++ & "C:\Program 
+Files\nodejs/node.exe" 
+"C:\Program 
+Files\nodejs/node_mo 
+...
++ ~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~
+~~
+    + CategoryInfo     
+         : 
+NotSpecified    : 
+(C:\Users\user\D.    
+..only\index.js:1:S    
+tring) [], RemoteEx    
+ception
+    + 
+FullyQualifiedErr    
+orId : NativeComman    
+dError
+ 
+throw new Error(
+      ^
+
+Error: This module 
+cannot be imported 
+from a Client 
+Component module. It 
+should only be used 
+from a Server 
+Component.
+    at 
+Object.<anonymous> (C:\
+Users\user\Downloads\uo
+l project (2)\uol proje
+ct\uol-portal\node_modu
+les\server-only\index.j
+s:1:7)
+    at Module._compile 
+(node:internal/modules/
+cjs/loader:1760:14)
+    at 
+Object.transformer (C:\
+Users\user\AppData\Loca
+l\npm-cache\_npx\fd45a7
+2a545557e9\node_modules
+\tsx\dist\register-D46f
+vsV_.cjs:3:1104)
+    at Module.load (nod
+e:internal/modules/cjs/
+loader:1480:32)
+    at Module._load (no
+de:internal/modules/cjs
+/loader:1299:12)
+    at TracingChannel.t
+raceSync (node:diagnost
+ics_channel:328:14)
+    at wrapModuleLoad (
+node:internal/modules/c
+js/loader:244:24)
+    at Module.require (
+node:internal/modules/c
+js/loader:1503:12)
+    at require (node:in
+ternal/modules/helpers:
+152:16)
+    at <anonymous> (C:\
+Users\user\Downloads\uo
+l project (2)\uol proje
+ct\uol-portal\lib\rag.t
+s:1:8)
+
+Node.js v24.11.0
