@@ -105,7 +105,7 @@ export default function StudentDashboard() {
     const recognition = new SpeechRecognition();
     recognition.lang = 'en-US';
     recognition.continuous = false;
-    recognition.interimResults = true; // Show live transcript
+    recognition.interimResults = false;
 
     recognitionRef.current = recognition;
 
@@ -214,7 +214,7 @@ export default function StudentDashboard() {
 
       if (data.response) {
         setMessages(prev => [...prev, { role: 'assistant', content: data.response }]);
-        speakText(data.response);
+        // speakText(data.response); // Auto speak disabled for now
       } else {
         setMessages(prev => [...prev, { role: 'assistant', content: `⚠️ Error: ${data.error || 'Unknown error. Please try again.'}` }]);
       }
