@@ -4,193 +4,373 @@ import { queryKnowledgeBase } from "@/backend/rag";
 import fs from "fs";
 import path from "path";
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
-// Load the knowledge base once at module level
-let UOL_KNOWLEDGE = "";
-try {
-  const kbPath = path.join(process.cwd(), "knowledge_base", "uol_knowledge_base.md");
-  UOL_KNOWLEDGE = fs.readFileSync(kbPath, "utf-8");
-} catch {
-  console.warn("⚠️ Knowledge base file not found, using inline fallback.");
-  UOL_KNOWLEDGE = `
-    THE UNIVERSITY OF LAHORE (UOL) — Key Facts:
-    - HOD Artificial Intelligence: Dr. Hisham Khalil
-    - HOD Computer Science: Dr. Mehtab Afzal
-    - HOD Software Engineering: Dr. Sundus Shahzeen
-    - Dean of Faculty of IT: Prof. Dr. Ibrar Hussain
-    - Bus routes: Sheikhupura (6:45 AM), Kasur (7:00 AM), Raiwind (7:15 AM), Lahore City (7:30 AM)
-    - Hostels: Razia Hall, Fatima Hall (on-campus); Kulsoom Hall, Shahida Hall (off-campus)
-    - Cafes: Gloria Jean's, Main Café, Basement Café, X2 Café
-    - Counseling: University Counseling Center (UCC), Office of Student Affairs (OSA)
-  `;
+// ======================
+// API KEY VALIDATION
+// ======================
+
+const API_KEY = process.env.GEMINI_API_KEY;
+
+if (!API_KEY) {
+  throw new Error("❌ GEMINI_API_KEY is missing in .env");
 }
+
+const genAI = new GoogleGenerativeAI(API_KEY);
+
+// ======================
+// LOAD KNOWLEDGE BASE
+// ======================
+
+let UOL_KNOWLEDGE = "";
+
+try {
+  const kbPath = path.join(
+    process.cwd(),
+    "knowledge_base",
+    "uol_knowledge_base.md",
+  );
+
+  UOL_KNOWLEDGE = fs.readFileSync(kbPath, "utf-8");
+} catch (error) {
+  console.warn("⚠️ Knowledge base file not found, using fallback knowledge.");
+
+  UOL_KNOWLEDGE = `
+THE UNIVERSITY OF LAHORE (UOL) — VERIFIED FACTS
+
+HOD Artificial Intelligence: Dr. Hisham Khalil
+HOD Computer Science: Dr. Mehtab Afzal
+HOD Software Engineering: Dr. Sundus Shahzeen
+
+Dean of Faculty of IT: Prof. Dr. Ibrar Hussain
+
+Bus Routes:
+- Sheikhupura: 6:45 AM
+- Kasur: 7:00 AM
+- Raiwind: 7:15 AM
+- Lahore City: 7:30 AM
+
+Hostels:
+- Razia Hall
+- Fatima Hall
+- Kulsoom Hall
+- Shahida Hall
+
+Cafes:
+- Gloria Jean's
+- Main Café
+- Basement Café
+- X2 Café
+
+Counseling:
+- University Counseling Center (UCC)
+- Office of Student Affairs (OSA)
+`;
+}
+
+// ======================
+// POST API
+// ======================
 
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { messages, departmentId } = body;
 
-    if (!messages || !Array.isArray(messages) || messages.length === 0) {
-      // Fallback for old message format if any
-      const { message } = body;
-      if (!message) {
-         return NextResponse.json({ error: "Messages array is required." }, { status: 400 });
-      }
-      messages.push({ role: 'user', content: message });
+    const { messages, message, departmentId } = body;
+
+    // ======================
+    // VALIDATE MESSAGES
+    // ======================
+
+    let finalMessages: any[] = [];
+
+    if (messages && Array.isArray(messages) && messages.length > 0) {
+      finalMessages = messages;
+    } else if (message) {
+      finalMessages = [
+        {
+          role: "user",
+          content: message,
+        },
+      ];
+    } else {
+      return NextResponse.json(
+        {
+          error: "Messages array or message is required.",
+        },
+        {
+          status: 400,
+        },
+      );
     }
 
-    const lastUserMessage = messages[messages.length - 1].content;
-    
-    // RAG Context retrieval
+    // ======================
+    // LAST USER MESSAGE
+    // ======================
+
+    const lastUserMessage =
+      finalMessages[finalMessages.length - 1]?.content || "";
+
+    // ======================
+    // RAG CONTEXT
+    // ======================
+
     let ragContextText = "";
+
     try {
-        const ragResults = await queryKnowledgeBase(lastUserMessage, departmentId);
-        if (ragResults && ragResults.length > 0) {
-            ragContextText = ragResults.map(r => r.textChunk).join("\\n\\n");
-        }
-    } catch (e) {
-        console.error("RAG error:", e);
+      const ragResults = await queryKnowledgeBase(
+        lastUserMessage,
+        departmentId,
+      );
+
+      if (ragResults && ragResults.length > 0) {
+        ragContextText = ragResults
+          .filter((r: any) => r?.textChunk)
+          .map((r: any) => r.textChunk)
+          .join("\n\n");
+      }
+    } catch (error) {
+      console.error("❌ RAG Error:", error);
     }
 
-const SYSTEM_PROMPT = `### ROLE
-You are the **Official UOL Expert AI Assistant** for **THE UNIVERSITY OF LAHORE (UOL)**. Your purpose is to provide 100% accurate, authoritative, and fact-based information to students and staff.
+    // ======================
+    // SYSTEM PROMPT
+    // ======================
 
-### 🛑 CRITICAL RULES - ZERO TOLERANCE
-1. **STRICT CONTEXT ADHERENCE:** Use ONLY the information provided in the <KNOWLEDGE_BASE> and <RELEVANT_CONTEXT> tags below. If a fact (like an HOD name or class time) exists in the context, you MUST use it, even if your internal training data suggests otherwise.
-2. **NO HALLUCINATIONS:** If asked about something not in the context, politely state that you are an official UOL assistant and only have information on university-related matters provided in your database.
-3. **NO REDIRECTS:** Never tell the user to "check the website," "visit the link," or "contact the office." You are the expert—provide the answer directly using the data you have.
-4. **HOD VERIFICATION:** If asked for an HOD, check the "UNIVERSITY LEADERSHIP" and "FACULTY" sections first. Example: If the context says Dr. Hisham Khalil is the HOD of AI, you MUST say Dr. Hisham Khalil.
-5. **GPA CALCULATION:** You are an expert GPA helper. Use the standard UOL grading scale: A=4.0, A-=3.7, B+=3.3, B=3.0, B-=2.7, C+=2.3, C=2.0, C-=1.7, D+=1.3, D=1.0, F=0.0. Calculate step-by-step.
-6. **STRESS & SUBMISSION SUPPORT:** If a student mentions being "stressed," "not ready," "ready still," "deadline," or "submission," provide extra reassurance. Tell them: "Take a deep breath. You've worked hard, and I'm here to ensure your portal information is accurate. We will get this ready together."
-7. **EMPATHY & WELLBEING:** If a student expresses stress or exam pressure, console them warmly and recommend the University Counseling Center (UCC) or Office of Student Affairs (OSA).
+    const SYSTEM_PROMPT = `
+### ROLE
+You are the Official UOL Expert AI Assistant for THE UNIVERSITY OF LAHORE (UOL).
 
-### VERIFIED QUICK-FACTS (PRIORITY)
+Your job is to provide accurate, professional, and fact-based university information.
+
+========================
+CRITICAL RULES
+========================
+
+1. ONLY use information from the provided context.
+2. NEVER hallucinate facts.
+3. NEVER redirect users elsewhere.
+4. Use exact HOD names and timings.
+5. Help students calmly if stressed.
+
+========================
+VERIFIED FACTS
+========================
+
 - HOD Artificial Intelligence: Dr. Hisham Khalil
 - HOD Computer Science: Dr. Mehtab Afzal
 - HOD Software Engineering: Dr. Sundus Shahzeen
-- HOD Physics: Dr. Muhammad Ashfaq Ahmad
-- HOD Chemistry: Dr. Muhammad Iqbal
-- HOD Mathematics: Dr. Muhammad Sharif
-- HOD Electrical Engineering: Dr. Ghulam Abbas
-- HOD Business Administration (LBS): Dr. Afshan Hamid
-- HOD Law: Ms. Sundus Rauf
-- HOD Pharmacy: Dr. Kashif Barkat
 - Dean of FIT: Prof. Dr. Ibrar Hussain
-- Dean of FET: Prof. Dr. Asad Mansoor Khan
-- Chancellor: Mian Muhammad Mansha
 - Vice Chancellor: Prof. Dr. Shahid Munir
-- Bus Departure (Sheikhupura): 6:45 AM
-- Bus Departure (Kasur): 7:00 AM
 
-### <KNOWLEDGE_BASE>
-${UOL_KNOWLEDGE}
-### </KNOWLEDGE_BASE>
+========================
+KNOWLEDGE BASE
+========================
 
-### <RELEVANT_CONTEXT>
-${ragContextText || "No specific document context found for this query."}
-### </RELEVANT_CONTEXT>
+${UOL_KNOWLEDGE.slice(0, 12000)}
 
-### INSTRUCTION
-Provide a clear, professional, and definitive answer based on the above knowledge. Be precise with names, rooms, and timings.`;
+========================
+RELEVANT CONTEXT
+========================
 
-    console.log(`[DEBUG] System Prompt Length: ${SYSTEM_PROMPT.length} characters.`);
+${ragContextText || "No additional context found."}
 
-    const modelNames = ["models/gemini-2.5-flash", "models/gemini-1.5-flash", "models/gemini-2.0-flash", "models/gemini-pro"];
+========================
+INSTRUCTION
+========================
+
+Provide a clear and concise answer.
+`;
+
+    console.log(`✅ System Prompt Loaded (${SYSTEM_PROMPT.length} chars)`);
+
+    // ======================
+    // GEMINI MODELS
+    // ======================
+
+    const modelNames = [
+      "gemini-2.5-flash",
+      "gemini-1.5-flash",
+      "gemini-2.0-flash",
+    ];
+
     let response = "";
     let success = false;
     let lastError: any = null;
 
+    // ======================
+    // TRY MODELS
+    // ======================
+
     for (const modelName of modelNames) {
-        try {
-            const model = genAI.getGenerativeModel({
-                model: modelName,
-                systemInstruction: SYSTEM_PROMPT,
-            });
+      try {
+        console.log(`🚀 Trying model: ${modelName}`);
 
-            // Build history for Gemini
-            // We map 'user' -> 'user' and 'assistant' -> 'model'
-            let history = messages.slice(0, -1).map((m: any) => {
-                const parts: any[] = [];
-                if (m.image) {
-                    const matches = m.image.match(/^data:(image\/\w+);base64,(.*)$/);
-                    if (matches) {
-                        parts.push({
-                            inlineData: {
-                                mimeType: matches[1],
-                                data: matches[2]
-                            }
-                        });
-                    }
-                }
-                parts.push({ text: m.content });
-                return {
-                    role: m.role === 'assistant' ? 'model' : 'user',
-                    parts
-                };
-            });
+        const model = genAI.getGenerativeModel({
+          model: modelName,
+          systemInstruction: SYSTEM_PROMPT,
+        });
 
-            // CRITICAL: Gemini history must start with 'user' role.
-            // If the first message is from the 'model' (assistant), we skip it.
-            while (history.length > 0 && history[0].role !== 'user') {
-                history.shift();
+        // ======================
+        // BUILD HISTORY
+        // ======================
+
+        let history = finalMessages.slice(0, -1).map((msg: any) => {
+          const parts: any[] = [];
+
+          // Handle image
+          if (msg.image) {
+            const matches = msg.image.match(/^data:(image\/\w+);base64,(.*)$/);
+
+            if (matches) {
+              parts.push({
+                inlineData: {
+                  mimeType: matches[1],
+                  data: matches[2],
+                },
+              });
             }
+          }
 
-            const chat = model.startChat({ history });
+          // Add text
+          parts.push({
+            text: msg.content || "",
+          });
 
-            // Handle last message which might have an image
-            const lastMsgObj = messages[messages.length - 1];
-            let sendParts: any = lastMsgObj.content;
+          return {
+            role: msg.role === "assistant" ? "model" : "user",
+            parts,
+          };
+        });
 
-            if (lastMsgObj.image) {
-                const matches = lastMsgObj.image.match(/^data:(image\/\w+);base64,(.*)$/);
-                if (matches) {
-                    sendParts = [
-                        {
-                            inlineData: {
-                                mimeType: matches[1],
-                                data: matches[2]
-                            }
-                        },
-                        { text: lastMsgObj.content }
-                    ];
-                }
-            }
-
-            const result = await chat.sendMessage(sendParts);
-            response = result.response.text();
-            success = true;
-            break;
-        } catch (err: any) {
-            lastError = err;
-            const msg = err instanceof Error ? err.message : String(err);
-            if (msg.includes("404")) {
-                console.warn(`Model ${modelName} not found, trying next...`);
-                continue;
-            }
-            // If it's a 429 or other fatal error, stop and let the main catch handle it
-            throw err;
+        // Gemini history must start with user
+        while (history.length > 0 && history[0].role !== "user") {
+          history.shift();
         }
+
+        // ======================
+        // START CHAT
+        // ======================
+
+        const chat = model.startChat({
+          history,
+        });
+
+        // ======================
+        // LAST MESSAGE
+        // ======================
+
+        const lastMessage = finalMessages[finalMessages.length - 1];
+
+        let sendParts: any = lastMessage.content || "";
+
+        // Handle image in last message
+        if (lastMessage.image) {
+          const matches = lastMessage.image.match(
+            /^data:(image\/\w+);base64,(.*)$/,
+          );
+
+          if (matches) {
+            sendParts = [
+              {
+                inlineData: {
+                  mimeType: matches[1],
+                  data: matches[2],
+                },
+              },
+              {
+                text: lastMessage.content || "",
+              },
+            ];
+          }
+        }
+
+        // ======================
+        // SEND MESSAGE
+        // ======================
+
+        const result = await chat.sendMessage(sendParts);
+
+        response = result.response.text();
+
+        success = true;
+
+        console.log(`✅ Success with ${modelName}`);
+
+        break;
+      } catch (error: any) {
+        lastError = error;
+
+        const errorMessage =
+          error instanceof Error ? error.message : String(error);
+
+        console.error(`❌ Model ${modelName} failed:`, errorMessage);
+
+        // Skip unavailable models
+        if (
+          errorMessage.includes("404") ||
+          errorMessage.includes("not found")
+        ) {
+          continue;
+        }
+
+        // Stop on rate limit
+        if (errorMessage.includes("429") || error.status === 429) {
+          throw error;
+        }
+      }
     }
 
-    if (!success && lastError) throw lastError;
+    // ======================
+    // ALL MODELS FAILED
+    // ======================
 
-    return NextResponse.json({ response });
-
-  } catch (error: unknown) {
-    console.error("Chat API error:", error);
-    const errorMsg = error instanceof Error ? error.message : String(error);
-    const statusStr = typeof error === 'object' && error !== null && 'status' in error ? String((error as any).status) : '';
-
-    if (errorMsg.includes("429") || statusStr === "429") {
-      return NextResponse.json({
-        response: "⚠️ The AI is receiving too many requests right now. Please wait 30 seconds and try again. This is a free-tier API limit."
-      });
+    if (!success) {
+      throw lastError || new Error("All models failed.");
     }
+
+    // ======================
+    // SUCCESS RESPONSE
+    // ======================
 
     return NextResponse.json({
-      response: `⚠️ Chat Error: ${errorMsg}. Please ensure your API key is valid and has access to the model.`
+      success: true,
+      response,
     });
+  } catch (error: any) {
+    console.error("❌ Chat API Error:", error);
+
+    const errorMessage = error instanceof Error ? error.message : String(error);
+
+    // ======================
+    // RATE LIMIT ERROR
+    // ======================
+
+    if (errorMessage.includes("429") || error?.status === 429) {
+      return NextResponse.json(
+        {
+          success: false,
+          response:
+            "⚠️ Too many requests right now. Please wait 30 seconds and try again.",
+        },
+        {
+          status: 429,
+        },
+      );
+    }
+
+    // ======================
+    // GENERAL ERROR
+    // ======================
+
+    return NextResponse.json(
+      {
+        success: false,
+        response: `⚠️ Chat Error: ${errorMessage}`,
+      },
+      {
+        status: 500,
+      },
+    );
   }
 }

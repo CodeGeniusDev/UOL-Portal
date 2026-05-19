@@ -1,6 +1,5 @@
 // import 'server-only';
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import { Prisma } from "@prisma/client";
 import { prisma } from "@/database/client";
 import fs from "fs";
 

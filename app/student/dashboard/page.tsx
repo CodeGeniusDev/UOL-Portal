@@ -182,11 +182,33 @@ export default function StudentDashboard() {
 
     try {
       const currentMessages = [...messages, newMessage];
-      const res = await fetch('/api/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages: currentMessages, departmentId }),
-      });
+      
+      // Retry logic for API calls
+      let res: Response | null = null;
+      let retryCount = 0;
+      const maxRetries = 3;
+      
+      while (retryCount < maxRetries) {
+        res = await fetch('/api/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ messages: currentMessages, departmentId }),
+        });
+
+        // If successful or not a server error, break
+        if (res.ok || res.status < 500) break;
+        
+        // If server error, wait and retry
+        retryCount++;
+        if (retryCount < maxRetries) {
+          const delay = Math.pow(2, retryCount) * 1000; // Exponential backoff: 2s, 4s, 8s
+          await new Promise(resolve => setTimeout(resolve, delay));
+        }
+      }
+
+      if (!res) {
+        throw new Error('Failed to connect to API after retries');
+      }
 
       const data = await res.json();
 
@@ -196,8 +218,10 @@ export default function StudentDashboard() {
       } else {
         setMessages(prev => [...prev, { role: 'assistant', content: `⚠️ Error: ${data.error || 'Unknown error. Please try again.'}` }]);
       }
-    } catch {
-      setMessages(prev => [...prev, { role: 'assistant', content: '⚠️ Network error. Please check your connection.' }]);
+    } catch (error: any) {
+      console.error('CHAT ERROR:', error);
+      const errorMessage = error?.message || 'Network error. Please check your connection.';
+      setMessages(prev => [...prev, { role: 'assistant', content: `⚠️ Error: ${errorMessage}` }]);
     } finally {
       setLoading(false);
     }

@@ -6477,3 +6477,120 @@ Withholding tax @ 5% leviable effective July 01, 2013 under section 236I of the 
 fee exceeds Rs. 200,000/-
 BSAI022430065, 11  -Jan-2026,  3:21:15PM, STA_FE0017BSAI022430065, 11  -Jan-2026,  3:21:15PM, STA_FE0017BSAI022430065, 11  -Jan-2026,  3:21:15PM, STA_FE0017
 
+
+
+---
+
+## Uploaded Resource — faculty-of-information-technology
+**File**: JAN-BUS-FEE.pdf | **Added**: May 19, 2026
+
+THE UNIVERSITY OF LAHORE
+DEFENCE ROAD CAMPUS, LAHORE
+1 KM, DEFENSE ROAD, BHOBATIAN CHOWK, LAHORE
+PH: (9242) 111 865 865, EMAIL: feerecovery@uol.edu.pk
+BANK COPYUNIVERSITY COPYSTUDENT COPY
+THE UNIVERSITY OF LAHORE
+DEFENCE ROAD CAMPUS, LAHORE
+1 KM, DEFENSE ROAD, BHOBATIAN CHOWK, LAHORE
+PH: (9242) 111 865 865, EMAIL: feerecovery@uol.edu.pk
+THE UNIVERSITY OF LAHORE
+DEFENCE ROAD CAMPUS, LAHORE
+1 KM, DEFENSE ROAD, BHOBATIAN CHOWK, LAHORE
+PH: (9242) 111 865 865, EMAIL: feerecovery@uol.edu.pk
+TRANSPORT CHARGINGTRANSPORT CHARGINGTRANSPORT CHARGING
+Allied Bank Limited PKR1674500015322 (Bill Type 127)Allied Bank Limited PKR1674500015322 (Bill Type 127)Allied Bank Limited PKR1674500015322 (Bill Type 127)
+Bank Al Habib (API Posting Only - 104 UOL)Bank Al Habib (API Posting Only - 104 UOL)Bank Al Habib (API Posting Only - 104 UOL)
+Bank Islami Pakistan LTD (LINKISLAMI)Bank Islami Pakistan LTD (LINKISLAMI)Bank Islami Pakistan LTD (LINKISLAMI)
+Kuickpay Reference No. 0852067020069856Kuickpay Reference No. 0852067020069856Kuickpay Reference No. 0852067020069856
+(Payable at all branches in Pakistan)(Payable at all branches in Pakistan)(Payable at all branches in Pakistan)
+15-Jan-2026
+Due Date:
+15-Jan-202615-Jan-202667020069856
+Fee Bill No:
+67020069856
+Fee Bill No:Fee Bill No:
+67020069856
+MUHAMMAD ABDULLAH ABBADMUHAMMAD ABDULLAH ABBAD
+01-Jan-202601-Jan-2026
+Bill Date:
+01-Jan-2026
+Bill Date:
+Bill Date:
+MUHAMMAD ABDULLAH ABBAD
+BSAI022430065BSAI022430065BSAI022430065
+Student Name:Student Name:Student Name:
+Reg No:Reg No:Reg No:
+Due Date:Due Date:
+ABBAD MUHAMMAD
+Father's Name:Father's Name:
+ABBAD MUHAMMAD
+Father's Name:
+ABBAD MUHAMMAD
+Department:
+DEPARTMENT OF SOFTWARE ENGINEERING
+Department:
+DEPARTMENT OF SOFTWARE ENGINEERING
+Department:
+DEPARTMENT OF SOFTWARE ENGINEERING
+Degree:
+BACHELOR OF SCIENCE IN ARTIFICIAL 
+INTELLIGENCE
+Degree:
+BACHELOR OF SCIENCE IN ARTIFICIAL 
+INTELLIGENCE
+BACHELOR OF SCIENCE IN ARTIFICIAL 
+INTELLIGENCE
+Degree:
+Route Details:
+GOOL MASJID - 13-A-M
+Remarks:
+TRANSPORT FARE CHARGES FOR JANUARY 2026
+Route Details:
+GOOL MASJID - 13-A-M
+Route Details:
+GOOL MASJID - 13-A-M
+Remarks:
+TRANSPORT FARE CHARGES FOR JANUARY 2026
+Remarks:
+TRANSPORT FARE CHARGES FOR JANUARY 2026
+AmountDescriptionAmountDescriptionAmountDescription
+RupeesRupees
+Rupees
+Transport Fare Charges 
+ 10,950
+Transport Fare Charges Transport Fare Charges 
+ 10,950 10,950
+Transport Delayed Payment Charges 
+ 150
+Transport Delayed Payment Charges Transport Delayed Payment Charges 
+ 150 150
+ 11,100 11,100
+Total:Total:Total Payment By Due Date (15-Jan-2026Total Payment By Due Date (15-Jan-2026): Total Payment By Due Date (15-Jan-2026): Total:
+ 11,100
+Depositor's SignatureBank Officer's Signature
+Depositor's SignatureDepositor's SignatureBank Officer's SignatureBank Officer's Signature
+THIS CHALLAN IS NOT VALID AFTER DUE DATETHIS CHALLAN IS NOT VALID AFTER DUE DATETHIS CHALLAN IS NOT VALID AFTER DUE DATE
+Note:Note:Note:
+- FINE will be charged if fees are not deposited within the scheduled dates.   FINE will not be waived in 
+any case.   All Fees are non refundable and can be changed without prior notice.
+- FINE will be charged if fees are not deposited within the scheduled dates.   FINE will not be waived in any 
+case.   All Fees are non refundable and can be changed without prior notice.
+- FINE will be charged if fees are not deposited within the scheduled dates.   FINE will not be waived in 
+any case.   All Fees are non refundable and can be changed without prior notice.
+- ABL Copy to be sent to ABL, The University of Lahore Branch 1.5 KM, Defence Road, (0191) Lahore.
+ These funds are intended for Bank Al Habib, The University of Lahore A/C # 0044-0081-000060-01-2 held 
+with Thokar Niaz Baig Branch Lhr.
+- ABL Copy to be sent to ABL, The University of Lahore Branch 1.5 KM, Defence Road, (0191) Lahore.
+ These funds are intended for Bank Al Habib, The University of Lahore A/C # 0044-0081-000060-01-2 held 
+with Thokar Niaz Baig Branch Lhr.
+- ABL Copy to be sent to ABL, The University of Lahore Branch 1.5 KM, Defence Road, (0191) Lahore.
+ These funds are intended for Bank Al Habib, The University of Lahore A/C # 0044-0081-000060-01-2 
+held with Thokar Niaz Baig Branch Lhr.
+Withholding tax @ 5% leviable effective July 01, 2013 under section 236I of the ITO, 2001 where annual 
+fee exceeds Rs. 200,000/-
+Withholding tax @ 5% leviable effective July 01, 2013 under section 236I of the ITO, 2001 where annual fee 
+exceeds Rs. 200,000/-
+Withholding tax @ 5% leviable effective July 01, 2013 under section 236I of the ITO, 2001 where annual 
+fee exceeds Rs. 200,000/-
+BSAI022430065, 11  -Jan-2026,  3:21:15PM, STA_FE0017BSAI022430065, 11  -Jan-2026,  3:21:15PM, STA_FE0017BSAI022430065, 11  -Jan-2026,  3:21:15PM, STA_FE0017
+
