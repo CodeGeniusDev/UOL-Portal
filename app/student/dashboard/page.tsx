@@ -455,7 +455,7 @@ export default function StudentDashboard() {
       {/* ── MAIN CHAT ── */}
       {activeTab === "knowledge" && (
         <main className="flex-1 flex flex-col w-full p-6 overflow-hidden">
-          <header className="mb-4 flex items-center justify-between">
+          <header className="mb-4 flex items-center bg-amber-300 justify-between">
             <div>
               <h1 className="text-2xl font-black text-gray-800">
                 UOL AI Assistant
